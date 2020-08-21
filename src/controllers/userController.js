@@ -8,7 +8,7 @@ export const readAll = (req, res) => {
     if (!users) {
         return res.status(404).json({
             status: 404,
-            error: 'No office found',
+            error: 'No user found',
         });
     }
     return res.status(200).json({
