@@ -5,12 +5,6 @@ import { v4 as uuidv4 } from 'uuid';
 
 
 export const readAll = (req, res) => {
-    if (!users) {
-        return res.status(404).json({
-            status: 404,
-            error: 'No user found',
-        });
-    }
     return res.status(200).json({
         status: 200,
         message: 'users successfully retrieved',
@@ -72,7 +66,6 @@ export const login=(req,res)=>{
         return user.email === userFind.email && user.password === userFind.password &&user.role;
     });
     if (user[0]) {
-        console.log(user[0].email,user[0].role);
         const token = generateToken(user[0].email,user[0].role);
         return res.status(200).json({
             status: 200,

@@ -19,6 +19,11 @@ var users = [{
     email:'fiacre1@gmail.com',
     password:'123456',
     role:'user'
+},
+{
+    email:'celine@cr.com',
+    password:'123456',
+    role:'user'
 }
 ];
 

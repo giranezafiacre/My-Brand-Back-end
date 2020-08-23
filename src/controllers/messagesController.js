@@ -3,12 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 
 export const readAll = (req, res) => {
-    if (!messages) {
-        return res.status(404).json({
-            status: 404,
-            error: 'No message found',
-        });
-    }
+    // }
     return res.status(200).json({
         status: 200,
         message: 'messages successfully retrieved',
@@ -38,8 +33,8 @@ export const readById = (req, res) => {
 export const create = (req, res) => {
     const message = {
         id: uuidv4(),
-        fullname:req.body.fullname,
-        phone:req.body.phone,
+        fullname: req.body.fullname,
+        phone: req.body.phone,
         email: req.body.email,
         message: req.body.message
     };
@@ -52,16 +47,16 @@ export const create = (req, res) => {
 
 };
 
-export const update=(req,res)=>{
+export const update = (req, res) => {
     const id = req.params.id;
     const message = messages.filter((message) => {
         return message.id === id;
     });
-    if(message[0]){
-        message[0].email=req.body.email;
-        message[0].phone=req.body.phone;
-        message[0].message=req.body.message;
-        message[0].fullname= req.body.fullname;
+    if (message[0]) {
+        message[0].email = req.body.email;
+        message[0].phone = req.body.phone;
+        message[0].message = req.body.message;
+        message[0].fullname = req.body.fullname;
         return res.status(200).json({
             status: 200,
             message: 'message successfully updated',
@@ -72,15 +67,15 @@ export const update=(req,res)=>{
         status: 404,
         error: 'message not found',
     });
-    
+
 }
 
-export const deleteMessage=(req,res)=>{
-    const id=req.params.id;
+export const deleteMessage = (req, res) => {
+    const id = req.params.id;
     const message = messages.filter((message) => {
         return message.id === id;
     });
-    if(message[0]){
+    if (message[0]) {
         var a = messages.indexOf(message[0]);
         messages.splice(a, 1);
         return res.status(200).json({

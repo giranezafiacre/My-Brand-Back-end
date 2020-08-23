@@ -3,16 +3,17 @@ import server from '../index';
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import testUserData from '../mochData/user';
-import Users from '../models/users';
 
 const { expect } = chai;
 chai.use(chaiHttp);
+let id1;
 before('some long setup', function(done) {
     chai.request(server).post('/user')
         .send(testUserData[2]).end((err, res)=>{
+            id1=res.body.data.id;
         },done());
   }
-  )
+  );
   after('delete this object after', function(done) {
     chai.request(server).delete(`/user/${testUserData[2].id}`).end((err,res)=>{},done());
   });
@@ -74,7 +75,7 @@ describe('read all users', () => {
 
 describe('read a user by id', () => {
     it('Should display a user by id', (done) => {
-        chai.request(server).get(`/user/${Users[0].id}`)
+        chai.request(server).get(`/user/${id1}`)
             .end((err, res) => {
                 expect(res).to.have.status(200);
                 expect(res.body).to.have.property('message');
@@ -93,7 +94,7 @@ describe('read a user by id', () => {
 
 describe('update a user by id', () => {
     it('Should update a user by id', (done) => {
-        chai.request(server).put(`/user/${Users[0].id}`)
+        chai.request(server).put(`/user/${id1}`)
             .send(testUserData[0])
             .end((err, res) => {
                 expect(res).to.have.status(200);
@@ -113,7 +114,7 @@ describe('update a user by id', () => {
 
 describe('delete a user by id', () => {
     it('Should delete a user by id', (done) => {
-        chai.request(server).delete(`/user/${Users[3].id}`)
+        chai.request(server).delete(`/user/${id1}`)
             .end((err, res) => {
                 expect(res).to.have.status(200);
                 expect(res.body).to.have.property('message');
