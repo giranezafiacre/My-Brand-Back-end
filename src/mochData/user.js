@@ -1,11 +1,10 @@
 
-
 var users = [{
-    email:'fiacre6@gmail.com',
+    email:'fiacre61@gmail.com',
     password:'123456'
 },
 {
-    email:'cynthia@mk.com',
+    email:'ALine1@mk.com',
     password:'123456'
 },
 {
@@ -13,11 +12,11 @@ var users = [{
     password:'1234567'
 },
 {
-    email:'fiacre1@gmail.com',
+    email:'testSignup@cr.com',
     password:'123456'
 },
 {
-    email:'celine@cr.com',
+    email:'testLogin@cr.com',
     password:'123456'
 }
 ];

@@ -30,7 +30,7 @@
     "start": "npm run build && node ./build/index.js",
     "dev": "nodemon --exec babel-node src/index.js",
     "build": "babel ./src -d build --source-maps --copy-files",
-    "test": "nyc --reporter=html --reporter=text mocha --require @babel/register src/test/* --exit"
+    "test": "nyc --reporter=html --reporter=text mocha --require @babel/register src/test/* --timeout 30000 --exit"
   },
   "engines": {
     "node": "10.16.2",

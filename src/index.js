@@ -5,10 +5,14 @@ import messageRoute from './routes/messagesRoute';
 import postRoute from './routes/postsRoute';
 import commentRoute from './routes/commentsRoute';
 import 'dotenv/config';
+import mongoose from './db/config';
 
 const server = express();
 
+
+
 const port = process.env.PORT || 5000;
+mongoose();
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ extended: false }));
 server.get('/', (req, res) => res.status(200).json({ message: 'Welcome to my brand' }));

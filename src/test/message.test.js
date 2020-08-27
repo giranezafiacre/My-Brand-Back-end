@@ -4,58 +4,50 @@ import chai from 'chai';
 import chaiHttp from 'chai-http';
 import testUserData from '../mochData/user';
 import testmessage from '../mochData/message';
-import Users from '../models/users';
-import messages from '../models/messages';
+import{token} from './user.test';
 
 const { expect } = chai;
 chai.use(chaiHttp);
-var token;
-let id1='dfghjkjhgfty';
-let token1 = 'hgfdjhgfd';
-let token2;
-before('create some data', function (done) {
-    chai.request(server).get('/user/login')
-        .send(testUserData[4]).end((err, res)=>{
-            token=res.body.token;
-        },done());
-  }
-);
-after('delete this object after', function (done) {
-    chai.request(server).delete(`/user/${testUserData[4].id}`).end((err, res) => { }, done());
-});
+let messageId
+let id1=45676543456;
+let token1 ='dfghjkjhgfty' ;
 
 describe('create message', () => {
     it('Should allow a user to create message', (done) => {
         chai.request(server).post('/message').send(testmessage[0])
             .end((err, res) => {
+                messageId=res.body.data._id;
                 expect(res).to.have.status(201);
                 expect(res.body).to.have.property('status');
                 expect(res.body).to.have.property('message');
                 expect(res.body).to.have.property('data');
-            }, done());
+                done()});
     });
 });
 describe('read all message', () => {
     it('Should allow an authenticated user to read all messages', (done) => {
-        chai.request(server).get('/message').set('Authorization', token2)
+        chai.request(server).get('/message').set('Authorization', token)
             .end((err, res) => {
+                console.log(res.body.data);
                 expect(res).to.have.status(200);
                 expect(res.body).to.have.property('status');
                 expect(res.body).to.have.property('message');
                 expect(res.body).to.have.property('data');
-            }, done());
+                done()});
     });
 });
 
 describe('read message by id', () => {
     it('Should allow an authenticated user to read message by id', (done) => {
-        chai.request(server).get(`/message/${messages[2].id}`).set('Authorization', token)
+        console.log(messageId);
+        chai.request(server).get(`/message/${messageId}`).set('Authorization', token)
             .end((err, res) => {
+                console.log(res.body);
                 expect(res).to.have.status(200);
                 expect(res.body).to.have.property('status');
                 expect(res.body).to.have.property('message');
                 expect(res.body).to.have.property('data');
-            }, done());
+                done()});
     });
     it('Should not allow an authenticated user to read message by id which does not exist', (done) => {
         chai.request(server).get(`/message/${id1}`).set('Authorization', token)
@@ -63,36 +55,35 @@ describe('read message by id', () => {
                 expect(res).to.have.status(404);
                 expect(res.body).to.have.property('status');
                 expect(res.body.error).to.equal('message not found');
-            }, done());
+                done()});
     });
 });
 
 describe('update message by id', () => {
     it('Should not allow user who provided wrong token to update message', (done) => {
-        chai.request(server).put(`/message/${messages[2].id}`).send(testmessage[2]).set('Authorization', token2)
+        chai.request(server).put(`/message/${messageId}`).send(testmessage[2]).set('Authorization', token1)
         .end((err, res) => {
             
-                expect(res).to.have.status(200);
-                expect(res.body).to.have.property('message');
-                expect(res.body.data).to.equal('You are not authorized to perform this task');
-            }, done());
+                expect(res).to.have.status(401);
+                expect(res.body.error).to.equal('You are not authorized to perform this task');
+                done()});
     });
     it('Should allow an authenticated user to update message by id', (done) => {
-        chai.request(server).put(`/message/${messages[2].id}`).send(testmessage[2]).set('Authorization', token)
+        chai.request(server).put(`/message/${messageId}`).send(testmessage[2]).set('Authorization', token)
             .end((err, res) => {
                 expect(res).to.have.status(200);
                 expect(res.body).to.have.property('status');
                 expect(res.body).to.have.property('message');
                 expect(res.body).to.have.property('data');
-            }, done());
+                done()});
     });
     it('Should not allow an authenticated user to update message by id which does not exist', (done) => {
-        chai.request(server).put(`/message/${id1}`).set('Authorization', token)
+        chai.request(server).put(`/message/${id1}`).send(testmessage[2]).set('Authorization', token)
             .end((err, res) => {
                 expect(res).to.have.status(404);
                 expect(res.body).to.have.property('status');
                 expect(res.body.error).to.equal('message not found');
-            }, done());
+                done()});
     });
 
 });
@@ -100,7 +91,7 @@ describe('update message by id', () => {
 describe('delete message by id', () => {
    
     it('Should not allow user who provided wrong token to delete message', (done) => {
-        chai.request(server).delete(`/message/${messages[2].id}`).set('Authorization', token1)
+        chai.request(server).delete(`/message/${messageId}`).set('Authorization', token1)
         .end((err, res) => {
                 expect(res).to.have.status(401);
                 expect(res.body).to.have.property('status');
@@ -108,13 +99,10 @@ describe('delete message by id', () => {
             }, done());
     });
     it('Should allow an authenticated user to delete message by id', (done) => {
-        chai.request(server).delete(`/message/${messages[2].id}`).set('Authorization', token)
+        chai.request(server).delete(`/message/${messageId}`).set('Authorization', token)
             .end((err, res) => {
-                expect(res).to.have.status(200);
-                expect(res.body).to.have.property('status');
-                expect(res.body).to.have.property('message');
-                expect(res.body).to.have.property('data');
-            }, done());
+                expect(res).to.have.status(204);
+                done()});
     });
     it('Should not allow an authenticated user to update message by id which does not exist', (done) => {
         chai.request(server).delete(`/message/${id1}`).set('Authorization', token)
@@ -122,6 +110,6 @@ describe('delete message by id', () => {
                 expect(res).to.have.status(404);
                 expect(res.body).to.have.property('status');
                 expect(res.body.error).to.equal('message not found');
-            }, done());
+                done()});
     });
 });
