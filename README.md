@@ -1,4 +1,3 @@
-
 # blog-api-backend
 
 [![Build Status](https://travis-ci.org/giranezafiacre/blog-api-backend.svg?branch=develop)](https://travis-ci.org/giranezafiacre/blog-api-backend)
