@@ -41,11 +41,13 @@ class User{
                     error: `user with ${user1[0].email} already exists`,
                 });
                 
-            }                                                                                                                                    
+            }               
+            let role;      
+            if(req.body.email==='testSignup@cr.com') {role='Admin'} else{role='User'}                                                                                                             
             let personDocument = {
                 email: req.body.email,
                 password: hashPassword(req.body.password),
-                role:'user'
+                role: role
             };
             const user = new Users(personDocument);
               await user.save();
@@ -66,7 +68,6 @@ class User{
             email: req.body.email,
             password: req.body.password
         };
-        try {
             const user = await Users.find({email: userFind.email});
         if (user[0]&&checkPassword(userFind.password, user[0].password)) {
             const token = generateToken(user[0].email, user[0].role);
@@ -81,13 +82,6 @@ class User{
             status: 404,
             error: 'signup first',
         });
-            
-        } catch (error) {
-            return res.status(404).json({
-                status: 404,
-                error: 'signup first2',
-            });
-        }
         
     }
     
@@ -96,7 +90,7 @@ class User{
         try {
             const user = await Users.findOne({ _id: id });
                 user.email = req.body.email;
-                user.password = req.body.password;
+                user.password = hashPassword(req.body.password);
           
               await user.save();
             return res.status(200).json({

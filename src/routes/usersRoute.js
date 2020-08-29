@@ -4,7 +4,7 @@ import checkUser from '../middleware/checkUser';
 
 const router = express.Router();
 router.post('/user',[checkUser], User.create);
-router.get('/user/login',[checkUser], User.login);
+router.post('/user/login',[checkUser], User.login);
 router.get('/user', User.readAll);
 router.get('/user/:id', User.readById);
 router.put('/user/:id',[checkUser], User.update);

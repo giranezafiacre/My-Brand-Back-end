@@ -39,7 +39,7 @@ describe('User SignUp', () => {
 
 describe('User Login', () => {
     it('Should allow a user to login', (done) => {
-        chai.request(server).get('/user/login')
+        chai.request(server).post('/user/login')
             .send(testUserData[3])
             .end((err, res) => {
                 token=res.body.token;
@@ -51,7 +51,7 @@ describe('User Login', () => {
             });
     });
     it('Should NOT allow unauthenticated user to login', (done) => {
-        chai.request(server).get('/user/login')
+        chai.request(server).post('/user/login')
             .send(testUserData[1])
             .end((err, res) => {
                 expect(res).to.have.status(404);
