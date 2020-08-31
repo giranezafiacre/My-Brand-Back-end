@@ -1,4 +1,4 @@
-import { v4 as uuidv4 } from 'uuid';
+
 
 var posts = [{
     title: 'Understanding Artificial intelligence',
@@ -28,5 +28,4 @@ var posts = [{
     author: 'Liliane1'
 }
 ];
-posts = posts.map((post) => ({ id: uuidv4(), ...post }));
 export default posts;

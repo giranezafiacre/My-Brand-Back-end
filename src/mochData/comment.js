@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from 'uuid';
 
 var comments=[ {
         fullname: 'Fiacre',
@@ -13,5 +12,4 @@ var comments=[ {
         suggestion: 'how to understand HTML?'
     }
 ]
-comments = comments.map((comment) => ({ id: uuidv4(), ...comment }));
 export default comments

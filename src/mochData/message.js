@@ -1,4 +1,4 @@
-import { v4 as uuidv4 } from 'uuid';
+
 
 var messages = [{
     email:'fiacre@GrammarList.com',
@@ -19,5 +19,4 @@ var messages = [{
     message:'how u doin?'
 }
 ];
-messages=messages.map((message)=>({id:uuidv4(), ...message}));
 export default messages;

@@ -1,31 +1,24 @@
-import { v4 as uuidv4 } from 'uuid';
 
 var users = [{
-    email:'fiacre@gmail.com',
-    password:'123456',
-    role:'user'
+    email:'fiacre61@gmail.com',
+    password:'123456'
 },
 {
-    email:'cynthia@mk.com',
-    password:'123456',
-    role:'user'
+    email:'ALine1@mk.com',
+    password:'123456'
 },
 {
     email:'alfred@mk.com',
-    password:'1234567',
-    role:'user'
+    password:'1234567'
 },
 {
-    email:'fiacre1@gmail.com',
-    password:'123456',
-    role:'user'
+    email:'testSignup@cr.com',
+    password:'123456'
 },
 {
-    email:'celine@cr.com',
-    password:'123456',
-    role:'user'
+    email:'testLogin@cr.com',
+    password:'123456'
 }
 ];
 
-users=users.map((user)=>({id:uuidv4(), ...user}));
 export default users;
