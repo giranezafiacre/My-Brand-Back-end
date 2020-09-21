@@ -21,7 +21,7 @@ server.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 mongoose();
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ extended: false }));
-server.get('/', (req, res) => res.status(200).json({ message: 'Welcome to my blog' }));
+server.get('/', (req, res) => res.status(200).json({ message: 'Welcome to my brand' }));
 server.use((req, res, next) => { res.status(400).json({ Error: 'Invalid Request' }); next();});
 server.listen(process.env.PORT || 5000, console.log(`server listening on ${port}`));
 export default server;
