@@ -23,7 +23,7 @@ server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ extended: false }));
 server.get('/', (req, res) => res.status(200).json({ message: 'Welcome to my brand' }));
 server.use((req, res, next) => { res.status(400).json({ Error: 'Invalid Request' }); next();});
-app.use((req, res, next) => {
+server.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   // res.setHeader('Origin', '*');
   // Request methods you wish to allow
